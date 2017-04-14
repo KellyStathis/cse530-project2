@@ -12,7 +12,7 @@ import random
 RANDOM_SEED = 40
 #SIMULATION_TIME = 15 # not used
 #NUM_DATA_BLOCKS = 1 # need to have multiple data blocks
-#MAX_READ_WRITE_TIME = 3 # not used
+MAX_READ_WRITE_TIME = 200
 NUM_REQUESTS = 6
 INTERVAL_REQUESTS = 10.0  # Generate new requests roughly every x seconds
 numReads = 0
@@ -50,6 +50,9 @@ def read(env, name, readLock, writeLock, readTime):
         print('%7.4f %s: Waited %6.3f' % (env.now, name, wait))
         
         timeReading = random.expovariate(1.0 / readTime)
+        if timeReading > MAX_READ_WRITE_TIME:
+            timeReading = MAX_READ_WRITE_TIME
+    
         yield env.timeout(timeReading)
         print('%7.4f %s: Finished' % (env.now, name))
         
@@ -70,6 +73,9 @@ def write(env, name, readLock, writeLock, writeTime):
         print('%7.4f %s: Waited %6.3f' % (env.now, name, wait))
         
         timeWriting = random.expovariate(1.0 / writeTime)
+        if timeWriting > MAX_READ_WRITE_TIME:
+            timeWriting = MAX_READ_WRITE_TIME
+        
         yield env.timeout(timeWriting)
         print('%7.4f %s: Finished' % (env.now, name))
         
