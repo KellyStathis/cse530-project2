@@ -14,8 +14,6 @@ NUM_DATA_BLOCKS = 2
 MAX_READ_WRITE_TIME = 200
 NUM_REQUESTS = 6
 INTERVAL_REQUESTS = 10.0  # Generate new requests roughly every x seconds
-numReads = 0
-numWrites = 0
 
 env = simpy.Environment()
 def source(env, numRequests, interval, readLockArray, writeLockArray):
