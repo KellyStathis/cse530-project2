@@ -41,10 +41,11 @@ def read(env, name, readLockArray, writeLockArray, blockNum, readTime):
     arrive = env.now
     print('%7.4f %s: Received' % (arrive, name))
     
-    # Wait for writeLock.count to be 0
+    # If this read is not the first request in the queue, wait
     while (requestQueue[blockNum][0] != name):
         yield env.timeout(1)
-        
+    
+    # Wait for writeLock.count to be 0
     while writeLockArray[blockNum].count != 0:
         yield env.timeout(1)
         
@@ -67,6 +68,7 @@ def write(env, name, readLockArray, writeLockArray, blockNum, writeTime):
     arrive = env.now
     print('%7.4f %s: Received' % (arrive, name))
 
+    # If this write is not the first request in the queue, wait
     while (requestQueue[blockNum][0] != name):
             yield env.timeout(1)
             
