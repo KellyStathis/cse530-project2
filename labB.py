@@ -41,14 +41,7 @@ def source(env, numRequests, interval, lastReadTimeArray, lastWriteTimeArray):
 def read(env, requestNum, name, lastReadTimeArray, lastWriteTimeArray, blockNum, readTime):
     arrive = env.now
     print('%7.4f %s: Received' % (arrive, name))
-    
-    # Update last read time before read
-    #lastReadTimeArray[blockNum] = requestNum
-    wait = env.now - arrive
         
-    # We got to the block (should be no wait for reading)
-    print('%7.4f %s: Waited %6.3f' % (env.now, name, wait))
-    
     timeReading = random.expovariate(1.0 / readTime)
     if timeReading > MAX_READ_WRITE_TIME:
         timeReading = MAX_READ_WRITE_TIME
@@ -62,36 +55,26 @@ def write(env, requestNum, name, lastReadTimeArray, lastWriteTimeArray, blockNum
     arrive = env.now
     print('%7.4f %s: Received' % (arrive, name))
     
-    #print('requestNum %d' % requestNum)
-    #print('lastReadTimeArray[blockNum] %d' % lastReadTimeArray[blockNum])
-    #print('lastWriteTimeArray[blockNum] %d' % lastWriteTimeArray[blockNum])
-
+    timeWriting = random.expovariate(1.0 / writeTime)
+    if timeWriting > MAX_READ_WRITE_TIME:
+        timeWriting = MAX_READ_WRITE_TIME
+    
+    yield env.timeout(timeWriting)
+  
     # If last read and last write are before current write timestamp
     if (lastReadTimeArray[blockNum] < requestNum and lastWriteTimeArray[blockNum] < requestNum):
         # We can write immediately
-        # Update last write time before write
-        #lastWriteTimeArray[blockNum] = requestNum
-        wait = env.now - arrive
-
-        # We got to the block
-        print('%7.4f %s: Waited %6.3f' % (env.now, name, wait))
-        
-        timeWriting = random.expovariate(1.0 / writeTime)
-        if timeWriting > MAX_READ_WRITE_TIME:
-            timeWriting = MAX_READ_WRITE_TIME
-        
-        yield env.timeout(timeWriting)
         # Update last write time after write
         lastWriteTimeArray[blockNum] = requestNum
         print('%7.4f %s: Finished' % (env.now, name))
     else:
         # Reissue attempt
-        print('Reissue %s' % name)
         global last_request_num
         newRequestNum = last_request_num + 1
         last_request_num = newRequestNum
-        name = 'Write%d Block%d' % (newRequestNum, blockNum)
-        c = write(env, newRequestNum, name, lastReadTimeArray, lastWriteTimeArray, blockNum, writeTime=100) 
+        newName = 'Write%d Block%d' % (newRequestNum, blockNum)
+        print('Reissue %s as %s' % (name, newName))
+        c = write(env, newRequestNum, newName, lastReadTimeArray, lastWriteTimeArray, blockNum, writeTime=100) 
         env.process(c)
         
 # Setup and start the simulation
