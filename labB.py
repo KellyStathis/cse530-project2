@@ -8,6 +8,7 @@ Created on Thu Apr 13 15:21:06 2017
 
 import simpy
 import random
+import numpy
 
 RANDOM_SEED = 40
 NUM_DATA_BLOCKS = 70
@@ -17,6 +18,7 @@ INTERVAL_REQUESTS = 10.0  # Generate new requests roughly every x seconds
 last_request_num = -1
 total_writes = 0
 invalid_writes = 0
+percentage_array = []
 
 """Use timestamp ordering"""
 
@@ -103,8 +105,12 @@ for rs in range(20, 220, 20):
     f.write('Run %d:\n' % (rs/20))
     f.write('Total writes: %d\n' % total_writes)
     f.write('Invalid writes: %d\n' % invalid_writes)
-    f.write('Percentage of invalid writes: %7.4f%%\n' % (invalid_writes*100/total_writes))
+    f.write('Percentage of invalid writes: %7.4f%%\n' % (float(invalid_writes*100)/float(total_writes)))
     f.close()
     print('Total writes: %d' % total_writes)
     print('Invalid writes: %d' % invalid_writes)
-    print('Percentage of invalid writes: %7.4f%%' % (invalid_writes*100/total_writes))
+    print('Percentage of invalid writes: %7.4f%%' % (float(invalid_writes*100)/float(total_writes)))
+    percentage_array.append((float(invalid_writes*100)/float(total_writes)))
+f = open('results.txt', 'a')
+f.write('Total average percentage of invalid writes: %7.4f%%' % numpy.average(percentage_array))
+f.close()
