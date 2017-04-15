@@ -15,7 +15,6 @@ MAX_READ_WRITE_TIME = 200
 NUM_REQUESTS = 6
 INTERVAL_REQUESTS = 10.0  # Generate new requests roughly every x seconds
 
-env = simpy.Environment()
 def source(env, numRequests, interval, readLockArray, writeLockArray):
     """Source generates read/write requests randomly"""
     for i in range(numRequests):

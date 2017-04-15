@@ -17,7 +17,6 @@ INTERVAL_REQUESTS = 5.0  # Generate new requests roughly every x seconds
 
 """Use first-come-first-served strategy to avoid starvation"""
 
-env = simpy.Environment()
 def source(env, numRequests, interval, readLockArray, writeLockArray):
     """Source generates read/write requests randomly"""
     for i in range(numRequests):
