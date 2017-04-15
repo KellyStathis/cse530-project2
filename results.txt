@@ -1,81 +1,41 @@
 Run 1:
-Total writes: 688
-Invalid writes: 47
-Percentage of invalid writes:  6.8314%
+Total writes: 662
+Invalid writes: 39
+Percentage of invalid writes:  5.8912%
 Run 2:
-Total writes: 1396
-Invalid writes: 80
-Percentage of invalid writes:  5.7307%
+Total writes: 1369
+Invalid writes: 70
+Percentage of invalid writes:  5.1132%
 Run 3:
-Total writes: 2091
-Invalid writes: 110
-Percentage of invalid writes:  5.2606%
+Total writes: 2066
+Invalid writes: 97
+Percentage of invalid writes:  4.6951%
 Run 4:
-Total writes: 2786
-Invalid writes: 136
-Percentage of invalid writes:  4.8816%
+Total writes: 2753
+Invalid writes: 127
+Percentage of invalid writes:  4.6131%
 Run 5:
-Total writes: 3483
-Invalid writes: 185
-Percentage of invalid writes:  5.3115%
+Total writes: 3424
+Invalid writes: 165
+Percentage of invalid writes:  4.8189%
 Run 6:
-Total writes: 4186
-Invalid writes: 216
-Percentage of invalid writes:  5.1601%
+Total writes: 4130
+Invalid writes: 201
+Percentage of invalid writes:  4.8668%
 Run 7:
-Total writes: 4868
-Invalid writes: 236
-Percentage of invalid writes:  4.8480%
+Total writes: 4814
+Invalid writes: 231
+Percentage of invalid writes:  4.7985%
 Run 8:
-Total writes: 5538
-Invalid writes: 269
-Percentage of invalid writes:  4.8573%
+Total writes: 5526
+Invalid writes: 270
+Percentage of invalid writes:  4.8860%
 Run 9:
-Total writes: 6257
-Invalid writes: 296
-Percentage of invalid writes:  4.7307%
+Total writes: 6255
+Invalid writes: 297
+Percentage of invalid writes:  4.7482%
 Run 10:
-Total writes: 6943
-Invalid writes: 338
-Percentage of invalid writes:  4.8682%
-Total average percentage of invalid writes:  5.2480%Run 1:
-Total writes: 688
-Invalid writes: 47
-Percentage of invalid writes:  6.8314%
-Run 2:
-Total writes: 1396
-Invalid writes: 80
-Percentage of invalid writes:  5.7307%
-Run 3:
-Total writes: 2091
-Invalid writes: 110
-Percentage of invalid writes:  5.2606%
-Run 4:
-Total writes: 2786
-Invalid writes: 136
-Percentage of invalid writes:  4.8816%
-Run 5:
-Total writes: 3483
-Invalid writes: 185
-Percentage of invalid writes:  5.3115%
-Run 6:
-Total writes: 4186
-Invalid writes: 216
-Percentage of invalid writes:  5.1601%
-Run 7:
-Total writes: 4868
-Invalid writes: 236
-Percentage of invalid writes:  4.8480%
-Run 8:
-Total writes: 5538
-Invalid writes: 269
-Percentage of invalid writes:  4.8573%
-Run 9:
-Total writes: 6257
-Invalid writes: 296
-Percentage of invalid writes:  4.7307%
-Run 10:
-Total writes: 6943
-Invalid writes: 338
-Percentage of invalid writes:  4.8682%
-Total average percentage of invalid writes:  5.2480%
+Total writes: 6949
+Invalid writes: 329
+Percentage of invalid writes:  4.7345%
+Total average percentage of invalid writes:  4.9166%

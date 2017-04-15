@@ -11,7 +11,7 @@ import random
 import numpy
 
 RANDOM_SEED = 40
-NUM_DATA_BLOCKS = 70
+NUM_DATA_BLOCKS = 75
 MAX_READ_WRITE_TIME = 100
 NUM_REQUESTS = 1400
 INTERVAL_REQUESTS = 10.0  # Generate new requests roughly every x seconds
