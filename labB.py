@@ -10,11 +10,13 @@ import simpy
 import random
 
 RANDOM_SEED = 40
-NUM_DATA_BLOCKS = 1
-MAX_READ_WRITE_TIME = 200
-NUM_REQUESTS = 10
-INTERVAL_REQUESTS = 5.0  # Generate new requests roughly every x seconds
-last_request_num = -1;
+NUM_DATA_BLOCKS = 70
+MAX_READ_WRITE_TIME = 100
+NUM_REQUESTS = 1400
+INTERVAL_REQUESTS = 10.0  # Generate new requests roughly every x seconds
+last_request_num = -1
+total_writes = 0
+invalid_writes = 0
 
 """Use timestamp ordering"""
 
@@ -33,6 +35,8 @@ def source(env, numRequests, interval, lastReadTimeArray, lastWriteTimeArray):
         else:
             # write to block
             name = 'Write%d Block%d' % (requestNum, blockNum)
+            global total_writes
+            total_writes = total_writes + 1
             c = write(env, requestNum, name, lastReadTimeArray, lastWriteTimeArray, blockNum, writeTime=100)       
         env.process(c)
         t = random.expovariate(1.0 / interval)
@@ -73,21 +77,34 @@ def write(env, requestNum, name, lastReadTimeArray, lastWriteTimeArray, blockNum
         newRequestNum = last_request_num + 1
         last_request_num = newRequestNum
         newName = 'Write%d Block%d' % (newRequestNum, blockNum)
+        global invalid_writes
+        invalid_writes = invalid_writes + 1
         print('Reissue %s as %s' % (name, newName))
+
         c = write(env, newRequestNum, newName, lastReadTimeArray, lastWriteTimeArray, blockNum, writeTime=100) 
         env.process(c)
-        
-# Setup and start the simulation
-print('Lab B')
-random.seed(RANDOM_SEED)
-env = simpy.Environment()
 
-# Start processes and run
-lastReadTimeArray = []
-lastWriteTimeArray = []
-for i in range (0,NUM_DATA_BLOCKS):
-    lastReadTimeArray.append(-1)
-    lastWriteTimeArray.append(-1)
-    
-env.process(source(env, NUM_REQUESTS, INTERVAL_REQUESTS, lastReadTimeArray, lastWriteTimeArray))
-env.run()
+for rs in range(20, 220, 20):
+    # Setup and start the simulation
+    print('Lab B')
+    random.seed(rs)
+    env = simpy.Environment()
+
+    # Start processes and run
+    lastReadTimeArray = []
+    lastWriteTimeArray = []
+    for i in range (0,NUM_DATA_BLOCKS):
+        lastReadTimeArray.append(-1)
+        lastWriteTimeArray.append(-1)
+        
+    env.process(source(env, NUM_REQUESTS, INTERVAL_REQUESTS, lastReadTimeArray, lastWriteTimeArray))
+    env.run()
+    f = open('results.txt', 'a')
+    f.write('Run %d:\n' % (rs/20))
+    f.write('Total writes: %d\n' % total_writes)
+    f.write('Invalid writes: %d\n' % invalid_writes)
+    f.write('Percentage of invalid writes: %7.4f%%\n' % (invalid_writes*100/total_writes))
+    f.close()
+    print('Total writes: %d' % total_writes)
+    print('Invalid writes: %d' % invalid_writes)
+    print('Percentage of invalid writes: %7.4f%%' % (invalid_writes*100/total_writes))
